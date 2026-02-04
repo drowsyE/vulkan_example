@@ -21,9 +21,6 @@ bool enableValidationLayers = false;
 bool enableValidationLayers = true;
 #endif
 
-#define MIN(a, b) ((a) > (b) ? (b) : (a))
-#define MAX(a, b) ((a) < (b) ? (b) : (a))
-
 #define MAX_FRAME_IN_FLIGHT 2
 
 std::vector<const char *> validationLayers = {"VK_LAYER_KHRONOS_validation"};
