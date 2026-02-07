@@ -311,7 +311,7 @@ void Renderer::createLogicalDevice() {
     createInfo.ppEnabledLayerNames = validationLayers.data();
   } else {
     createInfo.enabledLayerCount = 0;
-    createInfo.ppEnabledExtensionNames = nullptr;
+    createInfo.ppEnabledLayerNames = nullptr;
   }
 
   chk(vkCreateDevice(phys_dev, &createInfo, nullptr, &device),
