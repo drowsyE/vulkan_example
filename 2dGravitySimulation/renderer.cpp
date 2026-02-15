@@ -263,9 +263,9 @@ void Renderer::selectPhysicalDevice() {
                deviceProps.driverVersion);
         return;
       }
-    }
 
-    ++i;
+        ++i;
+    }
   }
 
   printf("Graphics family index : %d, Present family index : %d\n",
@@ -467,7 +467,7 @@ void Renderer::createRenderpass() {
   VkSubpassDependency dependency{};
   dependency.srcSubpass = VK_SUBPASS_EXTERNAL;
   dependency.dstSubpass = 0;
-  dependency.srcStageMask = VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT;
+  dependency.srcStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
   dependency.srcAccessMask = 0;
   dependency.dstStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
   dependency.dstAccessMask = VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
