@@ -17,7 +17,7 @@
 
 #define DEFAULT_WIDTH 800
 #define DEFAULT_HEIGHT 600
-#define WINDOW_TITLE "Black hole simulation"
+#define WINDOW_TITLE "2D particle simulation"
 
 #define MAX_FRAME_IN_FLIGHT 2
 #define PARTICLE_COUNT 1024
