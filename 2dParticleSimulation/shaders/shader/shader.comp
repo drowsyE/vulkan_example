@@ -1,0 +1,48 @@
+#version 450
+
+struct Particle {
+    vec2 position;
+    vec2 velocity;
+    vec4 color;
+};
+
+layout(binding = 0) uniform parameterUBO {
+    float dt;
+} ubo;
+
+layout(std140, binding = 1) readonly buffer ParticleSSBOIn {
+    Particle particlesIn[];
+};
+
+layout(std140, binding = 2) buffer ParticleSSBOOut {
+    Particle particlesOut[];
+};
+
+// https://vulkan-tutorial.com/images/compute_space.svg
+// The number of dimensions for work groups (defined by vkCmdDispatch) and invocations depends (defined by the local sizes in the compute shader) on *how input data is structured*.
+// 한 workgroup 안에 invocation(스레드)을 몇 개 둘지 정의, 여기서는 256 * 1 * 1 -> 256개
+// 각 invocation은 compute shader의 main함수를 호출함
+layout(local_size_x = 256, local_size_y = 1, local_size_z = 1) in;
+
+void main() {
+    
+    /*
+    gl_LocalInvocationID
+    gl_WorkGroupID
+    gl_GlobalInvocationID
+    */
+    uint index = gl_GlobalInvocationID.x;
+
+    Particle particleIn = particlesIn[index];
+
+    particlesOut[index].position = particleIn.position + particleIn.velocity.xy * ubo.dt;
+    particlesOut[index].velocity = particleIn.velocity;
+
+    // Flip movement at window border
+    if ((particlesOut[index].position.x <= -1.0) || (particlesOut[index].position.x >= 1.0)) {
+        particlesOut[index].velocity.x = -particlesOut[index].velocity.x;
+    }
+    if ((particlesOut[index].position.y <= -1.0) || (particlesOut[index].position.y >= 1.0)) {
+        particlesOut[index].velocity.y = -particlesOut[index].velocity.y;
+    }
+}
